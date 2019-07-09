@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Select = styled.select`
@@ -20,26 +20,16 @@ const SubmitBtn = styled.input`
 `;
 
 function DropDown(props) {
-  const [value, setValue] = useState('');
-
-  const handleChange = e => {
-    console.log(e.target.value);
-    setValue(e.target.value);
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    // Now send value to API
-
-  };
   return (
-    <form onSubmit={handleSubmit}>
-      <label>What are you craving?</label>
-      <Select value={value} onChange={handleChange}>
-        <option defaultValue="">Select Preference</option>
-        <option value="sit-down">Sit Down</option>
-        <option value="take-out">Take Out</option>
-        <option value="Bar">Bar</option>
+    <form onSubmit={props.handleSubmit}>
+      <h3>What are you craving?</h3>
+      <Select value={props.value} onChange={props.handleChange}>
+        <option value="" disabled>
+          Select Preference
+        </option>
+        <option value="restaurant">Sit Down</option>
+        <option value="delivery">Take Out</option>
+        <option value="bar">Bar</option>
       </Select>
       <SubmitBtn type="submit" value="Submit" />
     </form>

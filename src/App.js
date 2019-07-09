@@ -1,25 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-// import styled from 'styled-components';
 
-import Customers from './Components/Customers/Customers';
 import DropDown from './Components/DropDown';
 
 function App() {
-  // const Button = styled.button`
-  //   background: black;
-  //   color: #fff;
-  //   border: 0;
-  //   padding: 7px 10px;
-  // `;
+  const [value, setValue] = useState('');
+  const [choices, setChoices] = useState([]);
+
+  const handleChange = e => {
+    setValue(e.target.value);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    // Now send value to API
+    console.log(value);
+    fetch(`/api/yelp/${value}`)
+      .then(res => res.json())
+      .then(choices => setChoices([...choices]));
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Customers />
-        {/* <Button>Click Me!</Button> */}
-        <DropDown />
+        <DropDown
+          value={value}
+          setValue={setValue}
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+        />
+
+        <ul>
+          {choices.map(c => (
+            <div key={c.id}>
+              <div>
+                <img src={c.image_url} alt={c.name} width={600} height={400} />
+              </div>
+              <h3>{c.name}</h3>
+              <p>Rating: {c.rating}</p>
+            </div>
+          ))}
+        </ul>
       </header>
     </div>
   );
