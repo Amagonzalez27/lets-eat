@@ -1,5 +1,4 @@
 const router = require('express').Router();
-module.exports = router;
 
 router.get('/', (req, res, next) => {
   const customers = [
@@ -13,3 +12,5 @@ router.get('/', (req, res, next) => {
     next(err);
   }
 });
+
+module.exports = router;
