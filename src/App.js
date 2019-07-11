@@ -1,63 +1,23 @@
-import React, { useState, useEffect } from 'react';
-// import './App.css';
+import React from 'react';
+import { useRoutes, A } from 'hookrouter';
 import styled from 'styled-components';
+import { Main } from './styles';
+import Routes from './Routes';
 
-import DropDown from './Components/DropDown';
-import InfoCard from './Components/InfoCard';
-
-const Main = styled.div`
-  text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+const Nav = styled.div`
+  background-color: #eee;
+  width: 100%;
+  height: 75px;
 `;
 
 function App() {
-  const [value, setValue] = useState('');
-  const [choices, setChoices] = useState([]);
-
-  const handleChange = e => {
-    setValue(e.target.value);
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    // Now send value to API
-    console.log(value);
-    fetch(`/api/yelp/${value}`)
-      .then(res => res.json())
-      .then(choices => {
-        setChoices([...choices]);
-      });
-  };
-
-  // useEffect(() => {
-  //   fetch(`/api/yelp/bar`)
-  //     .then(res => res.json())
-  //     .then(choices => {
-  //       setChoices([...choices]);
-  //     });
-  // }, []);
-
+  const router = useRoutes(Routes);
   return (
-    <Main className="App">
-      {choices.length === 0 ? (
-        <DropDown
-          value={value}
-          setValue={setValue}
-          handleSubmit={handleSubmit}
-          handleChange={handleChange}
-        />
-      ) : (
-        <div>
-          <InfoCard yelp={choices} />
-        </div>
-      )}
+    <Main>
+      <Nav>
+        <A href="/">Lets Eat</A>
+      </Nav>
+      {router}
     </Main>
   );
 }
