@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+// import './App.css';
+import styled from 'styled-components';
 
 import DropDown from './Components/DropDown';
+import InfoCard from './Components/InfoCard';
+
+const Main = styled.div`
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+`;
 
 function App() {
   const [value, setValue] = useState('');
@@ -17,32 +31,34 @@ function App() {
     console.log(value);
     fetch(`/api/yelp/${value}`)
       .then(res => res.json())
-      .then(choices => setChoices([...choices]));
+      .then(choices => {
+        setChoices([...choices]);
+      });
   };
 
+  // useEffect(() => {
+  //   fetch(`/api/yelp/bar`)
+  //     .then(res => res.json())
+  //     .then(choices => {
+  //       setChoices([...choices]);
+  //     });
+  // }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
+    <Main className="App">
+      {choices.length === 0 ? (
         <DropDown
           value={value}
           setValue={setValue}
           handleSubmit={handleSubmit}
           handleChange={handleChange}
         />
-
-        <ul>
-          {choices.map(c => (
-            <div key={c.id}>
-              <div>
-                <img src={c.image_url} alt={c.name} width={600} height={400} />
-              </div>
-              <h3>{c.name}</h3>
-              <p>Rating: {c.rating}</p>
-            </div>
-          ))}
-        </ul>
-      </header>
-    </div>
+      ) : (
+        <div>
+          <InfoCard yelp={choices} />
+        </div>
+      )}
+    </Main>
   );
 }
 
