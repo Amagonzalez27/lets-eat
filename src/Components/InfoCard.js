@@ -56,24 +56,30 @@ const TinderBtns = styled.div`
 `;
 
 function InfoCard(props) {
+  const { choice, displayNextChoice } = props;
   return (
     <div>
-      {props.yelp.map(y => (
-        <InfoDiv key={y.id}>
-          <div>
-            <img src={y.image_url} alt={y.name} width={500} height={300} />
-          </div>
-          <InfoDescription>
-            <Name>{y.name}</Name>
-            <Rating>Rating: {y.rating}</Rating>
-            <Location>{y.location.address1}</Location>
-          </InfoDescription>
-          <TinderBtns>
-            <Button color="palevioletred">X</Button>
-            <Button>√</Button>
-          </TinderBtns>
-        </InfoDiv>
-      ))}
+      <InfoDiv key={choice.id}>
+        <div>
+          <img
+            src={choice.image_url}
+            alt={choice.name}
+            width={500}
+            height={300}
+          />
+        </div>
+        <InfoDescription>
+          <Name>{choice.name}</Name>
+          <Rating>Rating: {choice.rating}</Rating>
+          <Location>{choice.location.address1}</Location>
+        </InfoDescription>
+        <TinderBtns>
+          <Button onClick={displayNextChoice} color="palevioletred">
+            X
+          </Button>
+          <Button onClick={displayNextChoice}>√</Button>
+        </TinderBtns>
+      </InfoDiv>
     </div>
   );
 }

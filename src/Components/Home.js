@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Main } from '../styles';
 import DropDown from './DropDown';
-import InfoCard from './InfoCard';
+import Choices from './Choices';
 
 function Home() {
   const [value, setValue] = useState('');
@@ -25,18 +25,13 @@ function Home() {
   return (
     <Main className="App">
       <div>
-        {choices.length === 0 ? (
-          <DropDown
-            value={value}
-            setValue={setValue}
-            handleSubmit={handleSubmit}
-            handleChange={handleChange}
-          />
-        ) : (
-          <div>
-            <InfoCard yelp={choices} />
-          </div>
-        )}
+        <DropDown
+          value={value}
+          setValue={setValue}
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+        />
+        <Choices choices={choices} />
       </div>
     </Main>
   );
