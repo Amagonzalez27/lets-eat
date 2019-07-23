@@ -37,6 +37,7 @@ const Location = styled.p`
   flex-grow: 2;
   text-align: left;
 `;
+
 const Button = styled.button`
   color: ${props => props.color || '#00cc96'};
   border-radius: 100%;
@@ -56,7 +57,7 @@ const TinderBtns = styled.div`
 `;
 
 function InfoCard(props) {
-  const { choice, displayNextChoice } = props;
+  const { choice, yelpPick } = props;
   return (
     <div>
       <InfoDiv key={choice.id}>
@@ -74,10 +75,10 @@ function InfoCard(props) {
           <Location>{choice.location.address1}</Location>
         </InfoDescription>
         <TinderBtns>
-          <Button onClick={displayNextChoice} color="palevioletred">
+          <Button onClick={yelpPick} color="palevioletred">
             X
           </Button>
-          <Button onClick={displayNextChoice}>√</Button>
+          <Button onClick={e => yelpPick(e, choice)}>√</Button>
         </TinderBtns>
       </InfoDiv>
     </div>
