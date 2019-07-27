@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
-import { Main } from '../styles';
 import DropDown from './DropDown';
 import Choices from './Choices';
+import styled from 'styled-components';
+
+const StyledHome = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+`;
 
 function Home() {
   const [value, setValue] = useState('');
@@ -23,17 +30,15 @@ function Home() {
   };
 
   return (
-    <Main className="App">
-      <div>
-        <DropDown
-          value={value}
-          setValue={setValue}
-          handleSubmit={handleSubmit}
-          handleChange={handleChange}
-        />
-        <Choices choices={choices} />
-      </div>
-    </Main>
+    <StyledHome>
+      <DropDown
+        value={value}
+        setValue={setValue}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+      />
+      <Choices choices={choices} />
+    </StyledHome>
   );
 }
 
