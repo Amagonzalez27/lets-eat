@@ -41,9 +41,7 @@ function Choices(props) {
       ) : (
         <div>
           {favorites.length ? (
-            <div>
-              <Button>My Favorites</Button>
-            </div>
+           <Button>My Favorites</Button>
           ) : (
             ''
           )}
