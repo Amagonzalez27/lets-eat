@@ -1,8 +1,39 @@
-import React from 'react';
+import React, { useReducer } from 'react';
+import { initialState, reducer } from './reducer';
+/* Route Content */
 import { useRoutes, A } from 'hookrouter';
+import Routes from './Routes';
+/* Styling Content */
 import styled from 'styled-components';
 import { Main } from './styles';
-import Routes from './Routes';
+/* Context Providers */
+export const DispatchContext = React.createContext(initialState);
+export const StateContext = React.createContext(initialState);
+
+function App() {
+  const router = useRoutes(Routes);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <DispatchContext.Provider value={dispatch}>
+      <StateContext.Provider value={state}>
+        <Main>
+          <Navbar>
+            <NavList>
+              <li>
+                <A href="/">Lets Eat</A>
+              </li>
+              <li>
+                <A href="/favorites">My Favorites</A>
+              </li>
+            </NavList>
+          </Navbar>
+          {router}
+        </Main>
+      </StateContext.Provider>
+    </DispatchContext.Provider>
+  );
+}
 
 const Navbar = styled.nav`
   height: 50px;
@@ -27,24 +58,5 @@ const NavList = styled.ul`
     }
   }
 `;
-
-function App() {
-  const router = useRoutes(Routes);
-  return (
-    <Main>
-      <Navbar>
-        <NavList>
-          <li>
-            <A href="/">Lets Eat</A>
-          </li>
-          <li>
-            <A href="/favorites">My Favorites</A>
-          </li>
-        </NavList>
-      </Navbar>
-      {router}
-    </Main>
-  );
-}
 
 export default App;

@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+/* Components */
 import DropDown from './DropDown';
 import Choices from './Choices';
+/* Styling */
 import styled from 'styled-components';
-
-const StyledHome = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-`;
+/* Context Providers */
+import { DispatchContext } from '../App';
 
 function Home() {
+  const dispatch = useContext(DispatchContext);
   const [value, setValue] = useState('');
-  const [choices, setChoices] = useState([]);
 
   const handleChange = e => {
     setValue(e.target.value);
@@ -21,16 +17,12 @@ function Home() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // Now send value to API
-    console.log(value);
     fetch(`/api/yelp/${value}`)
       .then(res => res.json())
-      .then(choices => {
-        setChoices([...choices]);
+      .then(yelp => {
+        dispatch({ type: 'GET_CHOICES', payload: yelp });
       });
- 
   };
-
 
   return (
     <StyledHome>
@@ -40,9 +32,16 @@ function Home() {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
       />
-      <Choices choices={choices} />
+      <Choices />
     </StyledHome>
   );
 }
 
+const StyledHome = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+`;
 export default Home;

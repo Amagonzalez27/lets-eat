@@ -5,7 +5,7 @@ import Choices from './Components/Choices'
 
 const Routes = {
   '/': () => <Home />,
-  '/favorites': () => favorites => <Favorites favorites={favorites} />,
+  '/favorites': () => <Favorites />,
   '/choices': () => choices => <Choices choices={choices} />
 };
 
