@@ -44,6 +44,7 @@ const Navbar = styled.nav`
 `;
 
 const NavList = styled.ul`
+  margin: 0;
   list-style: none;
   padding: 0;
   display: flex;

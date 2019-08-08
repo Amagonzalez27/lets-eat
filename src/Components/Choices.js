@@ -13,17 +13,33 @@ function Choices() {
   const state = useContext(StateContext);
   const [choiceIdx, setChoiceIdx] = useState(0);
 
-  const displayNextChoice = function() {
+  const displayNextChoice = () => {
     setChoiceIdx(choiceIdx + 1);
   };
 
-  const yelpPick = function(e, choice) {
-    if (choice) {
+  const comparePicks = (choiceObj, list) => {
+    for (let choice of list) {
+      if (choice === choiceObj) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const yelpPick = (e, choice) => {
+    const exist = comparePicks(choice, state.favorites);
+    /* Todo: doesn't add a choice that already exist in favorites */
+    if (choice && !exist) {
       dispatch({ type: 'ADD_FAVORITES', payload: choice });
       displayNextChoice();
     } else {
       displayNextChoice();
     }
+  };
+
+  const clearChoices = () => {
+    dispatch({ type: 'CLEAR_CHOICES' });
+    navigate('/favorites');
   };
 
   const choices = state.choices;
@@ -36,7 +52,7 @@ function Choices() {
       ) : (
         <div>
           {state.favorites.length ? (
-            <Button onClick={() => navigate('/favorites')}>My Favorites</Button>
+            <Button onClick={() => clearChoices()}>My Favorites</Button>
           ) : (
             ''
           )}
