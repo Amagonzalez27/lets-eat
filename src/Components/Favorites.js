@@ -4,15 +4,16 @@ import { A } from 'hookrouter';
 import { DispatchContext, StateContext } from '../App';
 // Style
 import styled from 'styled-components';
+import { FaTrashAlt } from 'react-icons/fa';
+import { DELETE_FAVORITE } from '../reducer';
 
 function Favorites() {
   // const [state, getFavorites] = useReducer(reducer, initialState)
   const dispatch = useContext(DispatchContext);
   const state = useContext(StateContext);
   const deleteFavorite = id => {
-    dispatch({ type: 'DELETE_FAVORITE', payload: id });
+    dispatch({ type: DELETE_FAVORITE, payload: id });
   };
-  console.log('hello favs', state);
   return (
     <Fav>
       <h1>My Favorites</h1>
@@ -34,7 +35,9 @@ function Favorites() {
               {state.favorites.map(fav => (
                 <tr key={fav.id}>
                   <td onClick={() => deleteFavorite(fav.id)}>
-                    <Delete>X</Delete>
+                    <Delete>
+                      <FaTrashAlt />
+                    </Delete>
                   </td>
                   <td>
                     <img
@@ -128,6 +131,7 @@ const Delete = styled.span`
   font-size: 100px;
   font-weight: bold;
   color: palevioletred;
+  cursor: pointer;
 `;
 
 export default Favorites;

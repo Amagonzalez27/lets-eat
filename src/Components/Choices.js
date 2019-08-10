@@ -7,6 +7,7 @@ import InfoCard from './InfoCard';
 import styled from 'styled-components';
 /* Context Providers */
 import { DispatchContext, StateContext } from '../App';
+import { ADD_FAVORITES, CLEAR_CHOICES } from '../reducer';
 
 function Choices() {
   const dispatch = useContext(DispatchContext);
@@ -17,20 +18,18 @@ function Choices() {
     setChoiceIdx(choiceIdx + 1);
   };
 
-  const comparePicks = (choiceObj, list) => {
+  const comparePicks = (id, list) => {
+    if (list.length < 1) return false;
     for (let choice of list) {
-      if (choice === choiceObj) {
-        return true;
-      }
+      if (choice.id === id) return true;
     }
     return false;
   };
 
   const yelpPick = (e, choice) => {
-    const exist = comparePicks(choice, state.favorites);
-    /* Todo: doesn't add a choice that already exist in favorites */
-    if (choice && !exist) {
-      dispatch({ type: 'ADD_FAVORITES', payload: choice });
+    if (choice) {
+      const exist = comparePicks(choice.id, state.favorites);
+      if (!exist) dispatch({ type: ADD_FAVORITES, payload: choice });
       displayNextChoice();
     } else {
       displayNextChoice();
@@ -38,7 +37,7 @@ function Choices() {
   };
 
   const clearChoices = () => {
-    dispatch({ type: 'CLEAR_CHOICES' });
+    dispatch({ type: CLEAR_CHOICES });
     navigate('/favorites');
   };
 

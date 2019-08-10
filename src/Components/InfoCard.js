@@ -1,5 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FaHeart, FaTrashAlt } from 'react-icons/fa';
+
+function InfoCard(props) {
+  const { choice, yelpPick } = props;
+  return (
+    <div>
+      <InfoDiv key={choice.id}>
+        <div>
+          <img
+            src={choice.image_url}
+            alt={choice.name}
+            width={500}
+            height={300}
+          />
+        </div>
+        <InfoDescription>
+          <Name>{choice.name}</Name>
+          <Rating>Rating: {choice.rating}</Rating>
+          <Location>{choice.location.address1}</Location>
+        </InfoDescription>
+        <TinderBtns>
+          <Button onClick={yelpPick} color="palevioletred">
+            <FaTrashAlt />
+          </Button>
+          <Button onClick={e => yelpPick(e, choice)}>
+            <FaHeart />
+          </Button>
+        </TinderBtns>
+      </InfoDiv>
+    </div>
+  );
+}
 
 const InfoDiv = styled.div`
   text-align: center;
@@ -47,6 +79,9 @@ const Button = styled.button`
   height: 100px;
   font-size: 60px;
   font-weight: bold;
+  display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const TinderBtns = styled.div`
@@ -55,34 +90,5 @@ const TinderBtns = styled.div`
   align-items: center;
   padding: 20px;
 `;
-
-function InfoCard(props) {
-  const { choice, yelpPick } = props;
-  return (
-    <div>
-      <InfoDiv key={choice.id}>
-        <div>
-          <img
-            src={choice.image_url}
-            alt={choice.name}
-            width={500}
-            height={300}
-          />
-        </div>
-        <InfoDescription>
-          <Name>{choice.name}</Name>
-          <Rating>Rating: {choice.rating}</Rating>
-          <Location>{choice.location.address1}</Location>
-        </InfoDescription>
-        <TinderBtns>
-          <Button onClick={yelpPick} color="palevioletred">
-            X
-          </Button>
-          <Button onClick={e => yelpPick(e, choice)}>√</Button>
-        </TinderBtns>
-      </InfoDiv>
-    </div>
-  );
-}
 
 export default InfoCard;

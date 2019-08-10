@@ -6,6 +6,7 @@ import Choices from './Choices';
 import styled from 'styled-components';
 /* Context Providers */
 import { DispatchContext } from '../App';
+import { GET_CHOICES } from '../reducer';
 
 function Home() {
   const dispatch = useContext(DispatchContext);
@@ -20,7 +21,7 @@ function Home() {
     fetch(`/api/yelp/${value}`)
       .then(res => res.json())
       .then(yelp => {
-        dispatch({ type: 'GET_CHOICES', payload: yelp });
+        dispatch({ type: GET_CHOICES, payload: yelp });
       });
   };
 
